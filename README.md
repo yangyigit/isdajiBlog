@@ -1,6 +1,6 @@
 # isdajiblog
 
-> My ultimate Nuxt.js project
+> My divine Nuxt.js project
 
 ## Build Setup
 
