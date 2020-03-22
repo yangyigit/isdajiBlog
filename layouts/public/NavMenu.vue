@@ -12,15 +12,16 @@
         <span class="logo-slogan">一个热爱分享的程序猿</span>
       </div>
     </el-menu-item>
-    <el-menu-item index="1">首页</el-menu-item>
-    <el-menu-item index="2">关于我</el-menu-item>
-    <el-menu-item index="2">关于我</el-menu-item>
-    <el-menu-item index="2">关于我</el-menu-item>
-    <el-submenu index="3">
-      <template slot="title">知识分享</template>
-      <el-menu-item index="2-1">选项1</el-menu-item>
-      <el-menu-item index="2-2">选项2</el-menu-item>
-      <el-menu-item index="2-3">选项3</el-menu-item>
+    <el-menu-item index="1" class="nav-title hidden-sm-and-down">首页</el-menu-item>
+    <el-menu-item index="2" class="nav-title hidden-sm-and-down">关于我</el-menu-item>
+    <el-menu-item index="2" class="nav-title  hidden-sm-and-down">教程</el-menu-item>
+    <el-menu-item index="2" class="nav-title  hidden-sm-and-down">使用工具</el-menu-item>
+    <el-menu-item index="2" class="nav-title  hidden-sm-and-down">生活</el-menu-item>
+    <el-submenu index="3" class=" hidden-sm-and-down nav-title">
+      <template slot="title" class="nav-title">知识分享</template>
+      <el-menu-item index="3-1">选项1</el-menu-item>
+      <el-menu-item index="3-2">选项2</el-menu-item>
+      <el-menu-item index="3-3">选项3</el-menu-item>
     </el-submenu>
   </el-menu>
 </template>
@@ -53,5 +54,8 @@ export default {
       padding-left: 0.3rem;
     }
   }
+}
+.nav-title{
+  font-size: 0.87rem;
 }
 </style>

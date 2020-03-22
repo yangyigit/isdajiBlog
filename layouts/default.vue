@@ -2,14 +2,16 @@
   <div>
     <nav-menu />
     <nuxt />
+    <common-footer />
   </div>
 </template>
 
 <script>
 import NavMenu from './public/NavMenu'
+import CommonFooter from './public/CommonFooter'
 export default {
 
-  components: { NavMenu },
+  components: { NavMenu,CommonFooter },
 
 }
 </script>
@@ -25,5 +27,10 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  background-color: #ecf0f1;
+}
+a{
+  
+    text-decoration: none;
 }
 </style>
