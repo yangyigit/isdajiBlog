@@ -3,6 +3,8 @@
     <nav-menu />
     <nuxt />
     <common-footer />
+    <!-- 回到顶部 -->
+    <el-backtop></el-backtop>
   </div>
 </template>
 

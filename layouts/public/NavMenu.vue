@@ -8,20 +8,20 @@
   >
     <el-menu-item class="logo">
       <div class="logo-title">
-        我是大吉
+        <nuxt-link to="/">我是大吉</nuxt-link> 
         <span class="logo-slogan">一个热爱分享的程序猿</span>
       </div>
     </el-menu-item>
     <el-menu-item index="1" class="nav-title hidden-sm-and-down">首页</el-menu-item>
     <el-menu-item index="2" class="nav-title hidden-sm-and-down">关于我</el-menu-item>
-    <el-menu-item index="2" class="nav-title  hidden-sm-and-down">教程</el-menu-item>
-    <el-menu-item index="2" class="nav-title  hidden-sm-and-down">使用工具</el-menu-item>
-    <el-menu-item index="2" class="nav-title  hidden-sm-and-down">生活</el-menu-item>
-    <el-submenu index="3" class=" hidden-sm-and-down nav-title">
+    <el-menu-item index="3" class="nav-title  hidden-sm-and-down">教程</el-menu-item>
+    <el-menu-item index="4" class="nav-title  hidden-sm-and-down">使用工具</el-menu-item>
+    <el-menu-item index="5" class="nav-title  hidden-sm-and-down">生活</el-menu-item>
+    <el-submenu index="6" class=" hidden-sm-and-down nav-title">
       <template slot="title" class="nav-title">知识分享</template>
-      <el-menu-item index="3-1">选项1</el-menu-item>
-      <el-menu-item index="3-2">选项2</el-menu-item>
-      <el-menu-item index="3-3">选项3</el-menu-item>
+      <el-menu-item index="6-1">选项1</el-menu-item>
+      <el-menu-item index="6-2">选项2</el-menu-item>
+      <el-menu-item index="6-3">选项3</el-menu-item>
     </el-submenu>
   </el-menu>
 </template>
