@@ -13,7 +13,10 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    ],
+    script: [{
+      src: '/js/iconfont.js'
+    }]
   },
   /*
   ** Customize the progress-bar color
@@ -42,7 +45,20 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios'
   ],
+  axios:{
+    prefix: '/api/',
+    proxy: true
+  },
+  proxy: {
+    '/api/': {
+      target:'https://www.fastmock.site/mock/747b1149b5dda72a17567e5661de25db/',
+      pathRewrite: {
+        '^/api/': '/'
+      }
+    }
+},
   /*
   ** Build configuration
   */
@@ -52,6 +68,7 @@ module.exports = {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-    }
+    },
+    vendor:['axios']
   }
 }

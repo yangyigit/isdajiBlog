@@ -11,24 +11,29 @@
       </div>
       <el-divider content-position="center">社交账号</el-divider>
       <div class="accounts">
-        <el-tooltip class="accounts-item" effect="dark" content="Top Center 提示文字" placement="top">
+        <el-tooltip class="accounts-item" effect="dark" content="1187161570" placement="top">
           <el-button>
-            <i class="el-icon-user-solid">QQ</i>
+            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-tubiao215
+"></use></svg>QQ
           </el-button>
         </el-tooltip>
-        <el-tooltip class="accounts-item" effect="dark" content="Top Center 提示文字" placement="top">
+        <el-tooltip class="accounts-item" effect="dark" content="18364198620" placement="top">
           <el-button>
-            <i class="el-icon-user-solid">微信</i>
+            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-weixin
+"></use></svg>微信
           </el-button>
         </el-tooltip>
-        <el-tooltip class="accounts-item" effect="dark" content="Top Center 提示文字" placement="top">
+        <el-tooltip class="accounts-item" effect="dark" content="https://gitee.com/yangyigit" placement="top">
           <el-button>
-            <i class="el-icon-user-solid">码云</i>
+            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-github
+
+"></use></svg>GitHub
           </el-button>
         </el-tooltip>
-        <el-tooltip class="accounts-item" effect="dark" content="Top Center 提示文字" placement="top">
+        <el-tooltip class="accounts-item" effect="dark" content="1187161570@qq.com" placement="top">
           <el-button>
-            <i class="el-icon-user-solid">公众号</i>
+            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-youxiang
+"></use></svg>邮箱
           </el-button>
         </el-tooltip>
       </div>
@@ -63,6 +68,13 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
 .right-list {
   padding: 0 1rem;
   .clearfix {

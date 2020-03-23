@@ -1,25 +1,22 @@
 <template>
       <!-- 左边内容 -->
       <el-col :md="16" :lg="16" :xl="16" class="left-list">
-        <el-card class="box-card">
-          <!-- 内容类型 -->
-          <div slot="header" class="clearfix">
-            <span>关于我</span>
-          </div>
+        
+        <el-card class="box-card" v-for="item of info" :key="item.id">
           <!-- 内容 -->
           <div class="content">
           <h2 class="content-title">
-             <nuxt-link :to="{name:'artchive',params:{newsId:3306}}">Electron 免费视频教程-用前端技术开发桌面应用</nuxt-link>
+             <nuxt-link :to="{name:'artchive',params:{newsId:3306}}">{{item.title}}</nuxt-link>
           </h2>
-          <span class="content-date">2020-1-3</span>
-          <span class="content-des">个人感悟</span>
+          <span class="content-date">{{item.date}}</span>
+          <span class="content-des">{{item.keyword}}</span>
           <i class="el-icon-collection-tag
 "></i>
           <el-tag size="mini">php</el-tag>
           <el-row :gutter="10">
             <el-col :md="6" :lg="6" :xl="6">
               <div class="block">
-                <el-image :src="src" class="content-img">
+                <el-image :src="item.imgUrl" class="content-img">
                   <div slot="placeholder" class="image-slot">
                     加载中
                     <span class="dot">...</span>
@@ -28,15 +25,13 @@
               </div>
             </el-col>
             <el-col :md="18" :lg="18" :xl="18">
-              <div class="content-summary"> 在小程序中使用阿里文字图标在小程序中使用阿里文字图标库前在小程序中使用阿里文字图标库前库前端开发的便捷工具 - AndrewNeo - CSDN博客sdsadasdCSDN博客asdsadasdC
+              <div class="content-summary"> {{item.desc}}
               </div>
               <el-button style="float: left; padding: 3px 0" type="text">阅读全文</el-button>
-              <div class="readnum"><i class="el-icon-reading read-icon"></i>120</div>
+              <div class="readnum"><i class="el-icon-reading read-icon"><span>{{item.readnum}}</span></i></div>
             </el-col>
           </el-row>
           </div>
-          <el-divider></el-divider>
-          
         </el-card>
 
                 <el-card class="box-card">
@@ -57,7 +52,7 @@
           <el-row :gutter="10">
             <el-col :md="6" :lg="6" :xl="6">
               <div class="block">
-                <el-image :src="src" class="content-img">
+                <el-image src="" class="content-img">
                   <div slot="placeholder" class="image-slot">
                     加载中
                     <span class="dot">...</span>
@@ -69,7 +64,7 @@
               <div class="content-summary"> 在小程序中使用阿里文字图标在小程序中使用阿里文字图标库前在小程序中使用阿里文字图标库前库前端开发的便捷工具 - AndrewNeo - CSDN博客sdsadasdCSDN博客asdsadasdC
               </div>
               <el-button style="float: left; padding: 3px 0" type="text">阅读全文</el-button>
-              <div class="readnum"><i class="el-icon-reading read-icon"></i>120</div>
+              <div class="readnum"><i class="el-icon-reading read-icon"></i></div>
             </el-col>
           </el-row>
           </div>
@@ -87,7 +82,7 @@
           <el-row :gutter="10">
             <el-col :md="6" :lg="6" :xl="6">
               <div class="block">
-                <el-image :src="src" class="content-img">
+                <el-image src="" class="content-img">
                   <div slot="placeholder" class="image-slot">
                     加载中
                     <span class="dot">...</span>
@@ -117,7 +112,7 @@
           <el-row :gutter="10">
             <el-col :md="6" :lg="6" :xl="6">
               <div class="block">
-                <el-image :src="src" class="content-img">
+                <el-image src="" class="content-img">
                   <div slot="placeholder" class="image-slot">
                     加载中
                     <span class="dot">...</span>
@@ -143,11 +138,8 @@
 <script>
 export default {
   name: "left",
-  data() {
-    return {
-      src:
-        "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
-    };
+  props:{
+    info:Array
   }
 };
 </script>
@@ -194,6 +186,9 @@ export default {
       float: right;
       .read-icon{
         padding: 0 .2rem;
+        span{
+          padding: 0 .2rem;
+        }
       }
     }
   }

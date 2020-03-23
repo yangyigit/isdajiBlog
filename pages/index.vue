@@ -2,7 +2,7 @@
   <div class="container">
     <el-row :gutter="0">
       <!-- 左边内容 -->
-      <left />
+      <left :info="info"/>
       <!-- 右边内容 -->
       <right />
     </el-row>
@@ -12,10 +12,19 @@
 <script>
 import left from "./index/left";
 import right from "./index/right";
+import axios from 'axios'
 
 export default {
   name: "index",
-  components: { left, right }
+  components: { left, right },
+  asyncData(context) {
+    return context.$axios.get('/api/pagelist')
+      .then(res => {
+        if(res.data.code == 200){
+          return { info: res.data.data }
+        }
+      })
+  }
 };
 </script>
 <style lang="less" scoped>

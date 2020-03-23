@@ -12,7 +12,7 @@
         <span class="logo-slogan">一个热爱分享的程序猿</span>
       </div>
     </el-menu-item>
-    <el-menu-item index="1" class="nav-title hidden-sm-and-down">首页</el-menu-item>
+    <el-menu-item index="1" class="nav-title hidden-sm-and-down"><nuxt-link to="/">首页</nuxt-link></el-menu-item>
     <el-menu-item index="2" class="nav-title hidden-sm-and-down">关于我</el-menu-item>
     <el-menu-item index="3" class="nav-title  hidden-sm-and-down">教程</el-menu-item>
     <el-menu-item index="4" class="nav-title  hidden-sm-and-down">使用工具</el-menu-item>
