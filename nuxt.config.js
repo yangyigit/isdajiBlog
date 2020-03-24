@@ -53,7 +53,7 @@ module.exports = {
   },
   proxy: {
     '/api/': {
-      target:'https://www.fastmock.site/mock/747b1149b5dda72a17567e5661de25db/',
+      target:'http://www.isdaji.com/',
       pathRewrite: {
         '^/api/': '/'
       }

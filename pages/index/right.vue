@@ -6,7 +6,7 @@
         <span class="right-list-title">个人简介</span>
       </div>
       <div class="author-introduction">
-        <img src="~/static/img/contentimg.jpg" alt />
+        <div class="author-introduction-img-wrap"><img src="~/static/img/contentimg.jpg" class="author-introduction-img" alt /></div>
         <div class="author-des">萨达萨达所大所大所大所多as打算大所大所的萨达萨达所大所大所大所多所多所多所多所多所多</div>
       </div>
       <el-divider content-position="center">社交账号</el-divider>
@@ -85,11 +85,19 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    img {
-      object-fit: cover;
-      width: 100px;
-      height: 100px;
+    .author-introduction-img-wrap{
+      overflow: hidden;
       border-radius: 50%;
+      img {
+        object-fit: cover;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        transition: all 0.6s;  
+      }
+      img:hover {
+        transform: scale(1.5);
+      }
     }
     .author-des {
       padding: 1rem 4rem;

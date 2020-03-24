@@ -2,8 +2,8 @@
   <div class="container">
     <breadcrumb class="breadcrumb"/>
     <el-card class="box-card">
-      <div class="artchive-title">我的文章标题</div>
-      <div class="artchive-content">我的文章内容{{$route.params.newsId}}</div>
+      <div class="artchive-title">{{info.post_title}}</div>
+      <div class="artchive-content" v-html="info.post_content"></div>
     </el-card>
   </div>
 </template>
@@ -12,10 +12,22 @@
 import Breadcrumb from '@/components/Breadcrumb'
 export default {
   name: "",
+  validate ({ params }) {
+    // 必须是number类型
+    return /^\d+$/.test(params.id)
+  },
   data() {
     return {};
   },
   components: { Breadcrumb },
+  asyncData(context) {
+        return context.$axios.get('/api/portal/pages/'+context.params.id)
+      .then(res => {
+        if(res.data.code == 1){
+          return { info: res.data.data }
+        }
+      })
+  },
   created() {},
   mounted() {},
   methods: {}

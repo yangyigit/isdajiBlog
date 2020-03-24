@@ -3,20 +3,20 @@
       <el-col :md="16" :lg="16" :xl="16" class="left-list">
         
         <el-card class="box-card" v-for="item of info" :key="item.id">
-          <!-- 内容 -->
+          <!-- Page内容 -->
           <div class="content">
           <h2 class="content-title">
-             <nuxt-link :to="{name:'artchive',params:{newsId:3306}}">{{item.title}}</nuxt-link>
+             <nuxt-link to="page/1">{{item.post_title}}</nuxt-link>
           </h2>
-          <span class="content-date">{{item.date}}</span>
-          <span class="content-des">{{item.keyword}}</span>
+          <span class="content-date">{{item.create_time}}</span>
+          <span class="content-des">{{item.post_keywords}}</span>
           <i class="el-icon-collection-tag
 "></i>
           <el-tag size="mini">php</el-tag>
           <el-row :gutter="10">
             <el-col :md="6" :lg="6" :xl="6">
               <div class="block">
-                <el-image :src="item.imgUrl" class="content-img">
+                <el-image :src="item.more.thumbnail" class="content-img">
                   <div slot="placeholder" class="image-slot">
                     加载中
                     <span class="dot">...</span>
@@ -25,10 +25,10 @@
               </div>
             </el-col>
             <el-col :md="18" :lg="18" :xl="18">
-              <div class="content-summary"> {{item.desc}}
+              <div class="content-summary"> {{item.post_excerpt}}
               </div>
-              <el-button style="float: left; padding: 3px 0" type="text">阅读全文</el-button>
-              <div class="readnum"><i class="el-icon-reading read-icon"><span>{{item.readnum}}</span></i></div>
+              <el-button style="float: left; padding: 3px 0" type="text"><nuxt-link to="page/1" class="read_more">阅读全文</nuxt-link></el-button>
+              <div class="readnum"><i class="el-icon-reading read-icon"><span>{{item.post_hits}}</span></i></div>
             </el-col>
           </el-row>
           </div>
@@ -181,6 +181,9 @@ export default {
       color: #636e72;
       line-height: 1.5rem;
       min-height: 7.5rem;
+    }
+    .read_more{
+      color: #3498db;
     }
     .readnum{
       float: right;

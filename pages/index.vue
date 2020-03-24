@@ -18,9 +18,9 @@ export default {
   name: "index",
   components: { left, right },
   asyncData(context) {
-    return context.$axios.get('/api/pagelist')
+    return context.$axios.get('/api/portal/pages')
       .then(res => {
-        if(res.data.code == 200){
+        if(res.data.code == 1){
           return { info: res.data.data }
         }
       })
