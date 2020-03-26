@@ -6,13 +6,12 @@
           <!-- Page内容 -->
           <div class="content">
           <h2 class="content-title">
-             <nuxt-link to="page/1">{{item.post_title}}</nuxt-link>
+             <nuxt-link :to="{name:'page',params:{id:item.id}}">{{item.post_title}}</nuxt-link>
           </h2>
           <span class="content-date">{{item.create_time}}</span>
-          <span class="content-des">{{item.post_keywords}}</span>
           <i class="el-icon-collection-tag
 "></i>
-          <el-tag size="mini">php</el-tag>
+          <el-tag size="mini">{{item.post_keywords}}</el-tag>
           <el-row :gutter="10">
             <el-col :md="6" :lg="6" :xl="6">
               <div class="block">
@@ -27,32 +26,32 @@
             <el-col :md="18" :lg="18" :xl="18">
               <div class="content-summary"> {{item.post_excerpt}}
               </div>
-              <el-button style="float: left; padding: 3px 0" type="text"><nuxt-link to="page/1" class="read_more">阅读全文</nuxt-link></el-button>
+              <el-button style="float: left; padding: 3px 0" type="text"><nuxt-link :to="{name:'page',params:{id:item.id}}" class="read_more">阅读全文</nuxt-link></el-button>
               <div class="readnum"><i class="el-icon-reading read-icon"><span>{{item.post_hits}}</span></i></div>
             </el-col>
           </el-row>
           </div>
         </el-card>
 
-                <el-card class="box-card">
+        <el-card class="box-card" v-for="art of resart" :key="art.category_id">
           <!-- 内容类型 -->
           <div slot="header" class="clearfix">
-            <span>关于我</span>
+            <span>{{art.name}}</span>
           </div>
           <!-- 内容 -->
-          <div class="content">
+          <div class="content" v-for="content of art.child" :key="content.id">
           <h2 class="content-title">
-            <a href>Electron 免费视频教程-用前端技术开发桌面应用</a>
+            <nuxt-link :to="{name:'articles',params:{id:content.id}}">{{content.post_title}}</nuxt-link>
           </h2>
-          <span class="content-date">2020-1-3</span>
-          <span class="content-des">个人感悟</span>
+          <span class="content-date">{{content.published_time}}</span>
+          <span class="content-des">{{art.name}}</span>
           <i class="el-icon-collection-tag
 "></i>
-          <el-tag size="mini">php</el-tag>
+          <el-tag size="mini">{{content.post_keywords}}</el-tag>
           <el-row :gutter="10">
             <el-col :md="6" :lg="6" :xl="6">
               <div class="block">
-                <el-image src="" class="content-img">
+                <el-image :src="content.more.thumbnail" class="content-img">
                   <div slot="placeholder" class="image-slot">
                     加载中
                     <span class="dot">...</span>
@@ -61,75 +60,13 @@
               </div>
             </el-col>
             <el-col :md="18" :lg="18" :xl="18">
-              <div class="content-summary"> 在小程序中使用阿里文字图标在小程序中使用阿里文字图标库前在小程序中使用阿里文字图标库前库前端开发的便捷工具 - AndrewNeo - CSDN博客sdsadasdCSDN博客asdsadasdC
-              </div>
-              <el-button style="float: left; padding: 3px 0" type="text">阅读全文</el-button>
-              <div class="readnum"><i class="el-icon-reading read-icon"></i></div>
+              <div class="content-summary">{{content.post_excerpt}}</div>
+              <el-button style="float: left; padding: 3px 0" type="text"><nuxt-link  class="read_more" :to="{name:'articles',params:{id:content.id}}">阅读全文</nuxt-link></el-button>
+              <div class="readnum"><i class="el-icon-reading read-icon"><span>{{content.post_hits}}</span></i></div>
             </el-col>
           </el-row>
-          </div>
           <el-divider></el-divider>
-                    <!-- 内容 -->
-          <div class="content">
-          <h2 class="content-title">
-            <a href>Electron 免费视频教程-用前端技术开发桌面应用</a>
-          </h2>
-          <span class="content-date">2020-1-3</span>
-          <span class="content-des">个人感悟</span>
-          <i class="el-icon-collection-tag
-"></i>
-          <el-tag size="mini">php</el-tag>
-          <el-row :gutter="10">
-            <el-col :md="6" :lg="6" :xl="6">
-              <div class="block">
-                <el-image src="" class="content-img">
-                  <div slot="placeholder" class="image-slot">
-                    加载中
-                    <span class="dot">...</span>
-                  </div>
-                </el-image>
-              </div>
-            </el-col>
-            <el-col :md="18" :lg="18" :xl="18">
-              <div class="content-summary"> 在小程序中使用阿里文字图标在小程序中使用阿里文字图标库前在小程序中使用阿里文字图标库前库前端开发的便捷工具 - AndrewNeo - CSDN博客sdsadasdCSDN博客asdsadasdC
-              </div>
-                            <el-button style="float: left; padding: 3px 0" type="text">阅读全文</el-button>
-              <div class="readnum"><i class="el-icon-reading read-icon"></i>120</div>
-            </el-col>
-          </el-row>
           </div>
-          <el-divider></el-divider>
-                    <!-- 内容 -->
-          <div class="content">
-          <h2 class="content-title">
-            <a href>Electron 免费视频教程-用前端技术开发桌面应用</a>
-          </h2>
-          <span class="content-date">2020-1-3</span>
-          <span class="content-des">个人感悟</span>
-          <i class="el-icon-collection-tag
-"></i>
-          <el-tag size="mini">php</el-tag>
-          <el-row :gutter="10">
-            <el-col :md="6" :lg="6" :xl="6">
-              <div class="block">
-                <el-image src="" class="content-img">
-                  <div slot="placeholder" class="image-slot">
-                    加载中
-                    <span class="dot">...</span>
-                  </div>
-                </el-image>
-              </div>
-            </el-col>
-            <el-col :md="18" :lg="18" :xl="18">
-              <div class="content-summary"> 在小程序中使用阿里文字图标在小程序中使用阿里文字图标库前在小程序中使用阿里文字图标库前库前端开发的便捷工具 - AndrewNeo - CSDN博客sdsadasdCSDN博客asdsadasdC
-              </div>
-                            <el-button style="float: left; padding: 3px 0" type="text">阅读全文</el-button>
-              <div class="readnum"><i class="el-icon-reading read-icon"></i>120</div>
-            </el-col>
-          </el-row>
-          </div>
-          <el-divider></el-divider>
-          
         </el-card>
         
       </el-col>
@@ -139,10 +76,17 @@
 export default {
   name: "left",
   props:{
-    info:Array
+    info:Array,
+    resart:Object
   }
 };
 </script>
+<style>
+  .content:last-child .el-divider{
+    background-color: #ffffff;
+    height: 0;
+  }
+</style>
 <style lang="less" scoped>
 .span-style() {
   display: inline-block;
@@ -180,7 +124,7 @@ export default {
       padding: 0 .5rem;
       color: #636e72;
       line-height: 1.5rem;
-      min-height: 7.5rem;
+      min-height: 11.5rem;
     }
     .read_more{
       color: #3498db;

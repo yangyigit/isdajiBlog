@@ -11,7 +11,7 @@
 <script>
 import Breadcrumb from '@/components/Breadcrumb'
 export default {
-  name: "",
+  name: "page",
   validate ({ params }) {
     // 必须是number类型
     return /^\d+$/.test(params.id)
@@ -21,7 +21,7 @@ export default {
   },
   components: { Breadcrumb },
   asyncData(context) {
-        return context.$axios.get('/api/portal/pages/'+context.params.id)
+        return context.$axios.get('/api/portal/articles/'+context.params.id)
       .then(res => {
         if(res.data.code == 1){
           return { info: res.data.data }
