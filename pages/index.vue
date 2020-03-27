@@ -12,7 +12,6 @@
 <script>
 import left from "./index/left";
 import right from "./index/right";
-import axios from 'axios'
 
 export default {
   name: "index",

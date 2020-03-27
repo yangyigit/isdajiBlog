@@ -6,12 +6,12 @@
           <!-- Page内容 -->
           <div class="content">
           <h2 class="content-title">
-             <nuxt-link :to="{name:'page',params:{id:item.id}}">{{item.post_title}}</nuxt-link>
+             <nuxt-link :to="'page/'+item.id">{{item.post_title}}</nuxt-link>
           </h2>
-          <span class="content-date">{{item.create_time}}</span>
+          <span class="content-date">{{item.create_time | formatDate}}</span>
           <i class="el-icon-collection-tag
 "></i>
-          <el-tag size="mini">{{item.post_keywords}}</el-tag>
+          <el-tag class="content-tag" size="mini" v-for="(tag,index) of item.tag" :key="index">{{tag}}</el-tag>
           <el-row :gutter="10">
             <el-col :md="6" :lg="6" :xl="6">
               <div class="block">
@@ -26,7 +26,7 @@
             <el-col :md="18" :lg="18" :xl="18">
               <div class="content-summary"> {{item.post_excerpt}}
               </div>
-              <el-button style="float: left; padding: 3px 0" type="text"><nuxt-link :to="{name:'page',params:{id:item.id}}" class="read_more">阅读全文</nuxt-link></el-button>
+              <el-button style="float: left; padding: 3px 0" type="text"><nuxt-link :to="'page/'+item.id" class="read_more">阅读全文</nuxt-link></el-button>
               <div class="readnum"><i class="el-icon-reading read-icon"><span>{{item.post_hits}}</span></i></div>
             </el-col>
           </el-row>
@@ -41,13 +41,13 @@
           <!-- 内容 -->
           <div class="content" v-for="content of art.child" :key="content.id">
           <h2 class="content-title">
-            <nuxt-link :to="{name:'articles',params:{id:content.id}}">{{content.post_title}}</nuxt-link>
+            <nuxt-link :to="'articles/'+content.id">{{content.post_title}}</nuxt-link>
           </h2>
-          <span class="content-date">{{content.published_time}}</span>
+          <span class="content-date">{{content.create_time | formatDate}}</span>
           <span class="content-des">{{art.name}}</span>
           <i class="el-icon-collection-tag
 "></i>
-          <el-tag size="mini">{{content.post_keywords}}</el-tag>
+           <el-tag class="content-tag" size="mini" v-for="(tagart,index) of content.tag" :key="index">{{tagart}}</el-tag>
           <el-row :gutter="10">
             <el-col :md="6" :lg="6" :xl="6">
               <div class="block">
@@ -61,7 +61,7 @@
             </el-col>
             <el-col :md="18" :lg="18" :xl="18">
               <div class="content-summary">{{content.post_excerpt}}</div>
-              <el-button style="float: left; padding: 3px 0" type="text"><nuxt-link  class="read_more" :to="{name:'articles',params:{id:content.id}}">阅读全文</nuxt-link></el-button>
+              <el-button style="float: left; padding: 3px 0" type="text"><nuxt-link  class="read_more" :to="'articles/'+content.id">阅读全文</nuxt-link></el-button>
               <div class="readnum"><i class="el-icon-reading read-icon"><span>{{content.post_hits}}</span></i></div>
             </el-col>
           </el-row>
@@ -73,11 +73,21 @@
 </template>
 
 <script>
+import {formatDate} from '@/static/js/formatDate.js'
+
 export default {
   name: "left",
   props:{
     info:Array,
     resart:Object
+  },
+  filters:{
+
+    formatDate(time) {
+      time = time * 1000
+      let date = new Date(time)
+      return formatDate(date, 'yyyy-MM-dd')
+    }
   }
 };
 </script>
@@ -100,6 +110,7 @@ export default {
     .clearfix {
       span {
         color: #2c3e50;
+        font-size: 1.1rem;
       }
     }
     .content-title {
@@ -113,6 +124,9 @@ export default {
       a {
         color: #3498db;
       }
+    }
+    .content-tag{
+      margin-right: .5rem
     }
     .content-date {
       .span-style();

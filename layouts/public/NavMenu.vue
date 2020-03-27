@@ -3,40 +3,49 @@
     :default-active="activeIndex"
     class="el-menu-demo"
     mode="horizontal"
-    @select="handleSelect"
     type="flex"
   >
     <el-menu-item class="logo">
       <div class="logo-title">
         <nuxt-link to="/">我是大吉</nuxt-link> 
-        <span class="logo-slogan">一个热爱分享的程序猿</span>
+        <span class="logo-slogan">一个不务正业的程序猿</span>
       </div>
     </el-menu-item>
-    <el-menu-item index="1" class="nav-title hidden-sm-and-down"><nuxt-link to="/">首页</nuxt-link></el-menu-item>
-    <el-menu-item index="2" class="nav-title hidden-sm-and-down">关于我</el-menu-item>
-    <el-menu-item index="3" class="nav-title  hidden-sm-and-down">教程</el-menu-item>
-    <el-menu-item index="4" class="nav-title  hidden-sm-and-down">使用工具</el-menu-item>
-    <el-menu-item index="5" class="nav-title  hidden-sm-and-down">生活</el-menu-item>
-    <el-submenu index="6" class=" hidden-sm-and-down nav-title">
-      <template slot="title" class="nav-title">知识分享</template>
-      <el-menu-item index="6-1">选项1</el-menu-item>
-      <el-menu-item index="6-2">选项2</el-menu-item>
-      <el-menu-item index="6-3">选项3</el-menu-item>
+    <el-menu-item index="0" class="nav-title hidden-sm-and-down"><nuxt-link to="/">首页</nuxt-link></el-menu-item>
+    <template v-for="(item) of nav">
+    <el-menu-item  :index="item.id.toString()" class="nav-title hidden-sm-and-down" :key="item.id" v-if="!item.children">{{item.name}}</el-menu-item>
+    </template>
+    <template v-for="item of nav">
+    <el-submenu :index="item.id.toString()" class="nav-title hidden-sm-and-down" :key="item.id" v-if="item.children">
+      <template slot="title" class="nav-title">{{item.name}}</template>
+      <el-menu-item :index="itemchid.id.toString()" v-for="itemchid of item.children" :key="itemchid.id">{{itemchid.name}}</el-menu-item>
     </el-submenu>
+    </template>
   </el-menu>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "NavMenu",
   data() {
     return {
-      activeIndex: "1"
+      activeIndex: "0",
+      nav:[]
     };
   },
+  created(){
+    this.getNavInfo()
+  },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+    getNavInfo(){
+     axios.get('http://www.isdaji.com/api/portal/categories').then((res)=>{
+       res = res.data
+      if(res.code ==1 && res.data){
+        this.nav = res.data
+      }
+     })
     }
   }
 };
