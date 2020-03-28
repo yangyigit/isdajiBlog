@@ -1,8 +1,8 @@
 <template>
       <!-- 左边内容 -->
-      <el-col :md="16" :lg="16" :xl="16" class="left-list">
+      <el-col :md="16" :lg="16" :xl="16" class="left-list" >
         
-        <el-card class="box-card" v-for="item of info" :key="item.id">
+        <el-card class="box-card" v-for="(item,index) of info" :key="index">
           <!-- Page内容 -->
           <div class="content">
           <h2 class="content-title">
@@ -27,7 +27,7 @@
               <div class="content-summary"> {{item.post_excerpt}}
               </div>
               <el-button style="float: left; padding: 3px 0" type="text"><nuxt-link :to="'page/'+item.id" class="read_more">阅读全文</nuxt-link></el-button>
-              <div class="readnum"><i class="el-icon-reading read-icon"><span>{{item.post_hits}}</span></i></div>
+              <div class="readnum"><i class="el-icon-view read-icon"><span>{{item.post_hits}}</span></i></div>
             </el-col>
           </el-row>
           </div>
@@ -62,7 +62,7 @@
             <el-col :md="18" :lg="18" :xl="18">
               <div class="content-summary">{{content.post_excerpt}}</div>
               <el-button style="float: left; padding: 3px 0" type="text"><nuxt-link  class="read_more" :to="'articles/'+content.id">阅读全文</nuxt-link></el-button>
-              <div class="readnum"><i class="el-icon-reading read-icon"><span>{{content.post_hits}}</span></i></div>
+              <div class="readnum"><i class="el-icon-view read-icon"><span>{{content.post_hits}}</span></i></div>
             </el-col>
           </el-row>
           <el-divider></el-divider>

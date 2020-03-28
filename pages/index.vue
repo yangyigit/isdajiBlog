@@ -18,7 +18,7 @@ export default {
   components: { left, right },
   async asyncData({ $axios }) {
     const respage = await $axios.$get('/api/portal/pages')
-    const resart = await $axios.$get('/api/portal/articles?allcat=all')
+    const resart = await $axios.$get('/api/portal/recommend')
     return {
       info: respage.data,
       resart: resart.data

@@ -4,6 +4,7 @@
     class="el-menu-demo"
     mode="horizontal"
     type="flex"
+    router
   >
     <el-menu-item class="logo">
       <div class="logo-title">
@@ -11,14 +12,14 @@
         <span class="logo-slogan">一个不务正业的程序猿</span>
       </div>
     </el-menu-item>
-    <el-menu-item index="0" class="nav-title hidden-sm-and-down"><nuxt-link to="/">首页</nuxt-link></el-menu-item>
+    <el-menu-item index="/" class="nav-title hidden-sm-and-down">首页</el-menu-item>
     <template v-for="(item) of nav">
-    <el-menu-item  :index="item.id.toString()" class="nav-title hidden-sm-and-down" :key="item.id" v-if="!item.children">{{item.name}}</el-menu-item>
+    <el-menu-item :index="'/lists/'+item.id.toString()" class="nav-title hidden-sm-and-down" :key="item.id" v-if="!item.children">{{item.name}}</el-menu-item>
     </template>
     <template v-for="item of nav">
     <el-submenu :index="item.id.toString()" class="nav-title hidden-sm-and-down" :key="item.id" v-if="item.children">
       <template slot="title" class="nav-title">{{item.name}}</template>
-      <el-menu-item :index="itemchid.id.toString()" v-for="itemchid of item.children" :key="itemchid.id">{{itemchid.name}}</el-menu-item>
+      <el-menu-item :index="'/lists/'+itemchid.id.toString()" v-for="itemchid of item.children" :key="itemchid.id">{{itemchid.name}}</el-menu-item>
     </el-submenu>
     </template>
   </el-menu>
@@ -31,7 +32,7 @@ export default {
   name: "NavMenu",
   data() {
     return {
-      activeIndex: "0",
+      activeIndex: "/",
       nav:[]
     };
   },

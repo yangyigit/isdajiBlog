@@ -1,8 +1,13 @@
 <template>
   <div class="container">
-    <breadcrumb class="breadcrumb"/>
+    <breadcrumb class="breadcrumb" :breadtitle="info.post_title" :breadcattitle="info.categories[0].name" :breadid="info.categories[0].id"/>
     <el-card class="box-card">
       <div class="artchive-title">{{info.post_title}}</div>
+       <div class="tools-line">
+         <span>{{info.create_time | formatDate}}</span>
+         <i class="el-icon-view read-icon"><span>{{info.post_hits}}</span></i>
+       </div>
+      <el-divider></el-divider>
       <div class="artchive-content" v-html="info.post_content"></div>
     </el-card>
   </div>
@@ -10,6 +15,8 @@
 
 <script>
 import Breadcrumb from '@/components/Breadcrumb'
+import {formatDate} from '@/static/js/formatDate.js'
+
 export default {
   name: "page",
   validate ({ params }) {
@@ -17,7 +24,9 @@ export default {
     return /^\d+$/.test(params.id)
   },
   data() {
-    return {};
+    return {
+    
+    };
   },
   components: { Breadcrumb },
   asyncData(context) {
@@ -28,15 +37,20 @@ export default {
         }
       })
   },
-  created() {},
-  mounted() {},
-  methods: {}
+  filters:{
+
+    formatDate(time) {
+      time = time * 1000
+      let date = new Date(time)
+      return formatDate(date, 'yyyy-MM-dd')
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
 .container {
   margin-top: 0.5rem;
-  max-width: 1400px;
+  max-width: 1300px;
   margin: 1rem auto;
   .breadcrumb{
     margin: 1rem 0;
@@ -48,6 +62,12 @@ export default {
   }
   .artchive-content{
     color: #777;
+  }
+  .tools-line{
+    margin-top: 2rem;
+    span{
+      margin-right: .5rem;
+    }
   }
 }
 </style>

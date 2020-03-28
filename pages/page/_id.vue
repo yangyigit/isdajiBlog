@@ -1,32 +1,42 @@
 <template>
   <div class="container">
-    <breadcrumb class="breadcrumb"/>
+    <breadcrumb class="breadcrumb" :breadtitle="info.post_title" />
     <el-card class="box-card">
       <div class="artchive-title">{{info.post_title}}</div>
+      <div class="tools-line">
+        <span>{{info.create_time | formatDate}}</span>
+        <i class="el-icon-view read-icon">
+          <span>{{info.post_hits}}</span>
+        </i>
+      </div>
+      <el-divider></el-divider>
       <div class="artchive-content" v-html="info.post_content"></div>
     </el-card>
   </div>
 </template>
 
 <script>
-import Breadcrumb from '@/components/Breadcrumb'
+import Breadcrumb from "@/components/Breadcrumb";
+import {formatDate} from '@/static/js/formatDate.js'
+
 export default {
   name: "page",
-  validate ({ params }) {
+  validate({ params }) {
     // 必须是number类型
-    return /^\d+$/.test(params.id)
+    return /^\d+$/.test(params.id);
   },
   data() {
     return {};
   },
   components: { Breadcrumb },
   asyncData(context) {
-        return context.$axios.get('/api/portal/pages/'+context.params.id)
+    return context.$axios
+      .get("/api/portal/pages/" + context.params.id)
       .then(res => {
-        if(res.data.code == 1){
-          return { info: res.data.data }
+        if (res.data.code == 1) {
+          return { info: res.data.data };
         }
-      })
+      });
   },
   created() {},
   mounted() {},
@@ -36,18 +46,24 @@ export default {
 <style lang="less" scoped>
 .container {
   margin-top: 0.5rem;
-  max-width: 1400px;
+  max-width: 1300px;
   margin: 1rem auto;
-  .breadcrumb{
+  .breadcrumb {
     margin: 1rem 0;
   }
-  .artchive-title{
-    font-size:  2rem;
+  .artchive-title {
+    font-size: 2rem;
     text-align: center;
     color: #2d3436;
   }
-  .artchive-content{
+  .artchive-content {
     color: #777;
+  }
+  .tools-line {
+    margin-top: 2rem;
+    span {
+      margin-right: 0.5rem;
+    }
   }
 }
 </style>

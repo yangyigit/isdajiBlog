@@ -1,16 +1,18 @@
 <template>
   <el-breadcrumb separator="/">
     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-    <el-breadcrumb-item>
-      <a href="/">活动管理</a>
-    </el-breadcrumb-item>
-    <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-    <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+    <el-breadcrumb-item v-if="breadcattitle"><nuxt-link :to="'/lists/'+breadid">{{breadcattitle}}</nuxt-link></el-breadcrumb-item>
+    <el-breadcrumb-item v-if="breadtitle">{{breadtitle}}</el-breadcrumb-item>
   </el-breadcrumb>
 </template>
 
 <script>
 export default {
+  props:{
+    breadtitle:String,
+    breadcattitle:String,
+    breadid:Number
+  },
   name: "Breadcrumb",
   data() {
     return {};
