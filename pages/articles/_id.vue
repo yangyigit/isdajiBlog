@@ -28,6 +28,17 @@ export default {
     
     };
   },
+    //独立设置head信息
+  head(){
+      return{
+        title:'我是大吉-'+this.info.post_title,
+        meta:[
+          {hid:'description',name:'description',content:this.info.post_excerpt},
+          {hid: 'keywords', name: 'keywords', content: this.info.post_keywords},
+          {hid: 'title', name: 'title', content: '我是大吉-'+this.info.post_title},
+        ]
+      }
+  },
   components: { Breadcrumb },
   asyncData(context) {
         return context.$axios.get('/api/portal/articles/'+context.params.id)

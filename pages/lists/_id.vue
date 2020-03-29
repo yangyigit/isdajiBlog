@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <el-card><el-page-header @back="goBack" content="列表页面" title="返回"></el-page-header></el-card>
+    <el-card>
+      <el-page-header @back="goBack" content="列表页面" title="返回"></el-page-header>
+    </el-card>
     <el-card class="box-card" v-for="item in lists" :key="item.id">
       <el-row :gutter="20" v-if="item">
         <el-col :span="4">
@@ -23,33 +25,87 @@
       </el-row>
     </el-card>
     <div class="pagination">
-      <el-pagination background layout="prev, pager, next" :total="2" :page-size="1"></el-pagination>
+      <el-pagination
+        @current-change="handleCurrentChange"
+        @prev-click="handleCurrentPrev"
+        @next-click="handleCurrentNext"
+        background
+        :hide-on-single-page="true"
+        layout="prev, pager, next"
+        next-text="下一页"
+        prev-text="上一页"
+        :page-count="page_count"
+      ></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "",
   data() {
-    return {};
+    return {
+      lists:[],
+      page_count:0,
+      page:1,
+      page_size:2
+    };
   },
   async asyncData({ $axios, params }) {
-    const reslist = await $axios.$get(
-      "/api/portal/lists/getCategoryPostLists",
-      {
-        params: {
-          category_id: params.id
-        }
-      }
-    );
+    const categories = await $axios.$get("/api/portal/categories/" + params.id);
     return {
-      lists: reslist.data.list
+      categories: categories.data
     };
+  },
+  //独立设置head信息
+  head() {
+    return {
+      title: "我是大吉-" + this.categories.name,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.categories.description
+        }
+      ]
+    };
+  },
+  created(){
+    this.getListInfo()
   },
   methods: {
     goBack() {
-       this.$router.go(-1);//返回上一层
+      this.$router.go(-1); //返回上一层
+    },
+    getListInfo(){
+      var that = this;
+     axios.get('http://www.isdaji.com/api/portal/lists/getCategoryPostLists',      {
+        params: {
+          category_id: this.$route.params.id,
+          page: that.page,
+          page_size: that.page_size
+        }
+      }).then((res)=>{
+       res = res.data
+      if(res.code ==1 && res.data){
+        this.lists = res.data.list
+        this.page_count = res.data.page_count
+      }
+     })
+    },
+    handleCurrentChange(val) {
+       this.page = val;
+       this.getListInfo();
+    },
+    handleCurrentPrev(val) {
+       this.page = val;
+       this.getListInfo();
+    },
+    handleCurrentNext(val) {
+       this.page = val;
+       this.getListInfo();
     }
   }
 };
