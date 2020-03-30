@@ -4,7 +4,7 @@
       <!-- 左边内容 -->
       <left :info="info" :resart="resart"/>
       <!-- 右边内容 -->
-      <right />
+      <right  :siteInfo="siteInfo" :links="links"/>
     </el-row>
   </div>
 </template>
@@ -19,9 +19,17 @@ export default {
   async asyncData({ $axios }) {
     const respage = await $axios.$get('/api/portal/pages')
     const resart = await $axios.$get('/api/portal/recommend')
+    const links= await $axios.$get('/api/portal/site/getLinks')
+    const siteInfo = await $axios.$get('/api/portal/site',{
+        params: {
+          type: 'site_info'
+        }
+      })
     return {
       info: respage.data,
-      resart: resart.data
+      resart: resart.data,
+      siteInfo: siteInfo.data,
+      links: links.data
     }
   }
   // asyncData(context) {

@@ -81,7 +81,7 @@ export default {
     },
     getListInfo(){
       var that = this;
-     axios.get('http://www.isdaji.com/api/portal/lists/getCategoryPostLists',      {
+     axios.get('http://www.isdaji.com/api/portal/lists/getCategoryPostLists', {
         params: {
           category_id: this.$route.params.id,
           page: that.page,

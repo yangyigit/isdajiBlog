@@ -7,30 +7,30 @@
       </div>
       <div class="author-introduction">
         <div class="author-introduction-img-wrap"><img src="~/static/img/contentimg.jpg" class="author-introduction-img" alt /></div>
-        <div class="author-des">萨达萨达所大所大所大所多as打算大所大所的萨达萨达所大所大所大所多所多所多所多所多所多</div>
+        <div class="author-des">{{siteInfo.site_information}}</div>
       </div>
       <el-divider content-position="center">社交账号</el-divider>
       <div class="accounts">
-        <el-tooltip class="accounts-item" effect="dark" content="1187161570" placement="top">
+        <el-tooltip class="accounts-item" effect="dark" :content="siteInfo.site_contact[0]" placement="top">
           <el-button>
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-tubiao215
 "></use></svg>QQ
           </el-button>
         </el-tooltip>
-        <el-tooltip class="accounts-item" effect="dark" content="18364198620" placement="top">
+        <el-tooltip class="accounts-item" effect="dark" :content="siteInfo.site_contact[1]" placement="top">
           <el-button>
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-weixin
 "></use></svg>微信
           </el-button>
         </el-tooltip>
-        <el-tooltip class="accounts-item" effect="dark" content="https://gitee.com/yangyigit" placement="top">
+        <el-tooltip class="accounts-item" effect="dark" :content="siteInfo.site_contact[2]" placement="top">
           <el-button>
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-github
 
 "></use></svg>GitHub
           </el-button>
         </el-tooltip>
-        <el-tooltip class="accounts-item" effect="dark" content="1187161570@qq.com" placement="top">
+        <el-tooltip class="accounts-item" effect="dark" :content="siteInfo.site_contact[3]" placement="top">
           <el-button>
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-youxiang
 "></use></svg>邮箱
@@ -41,30 +41,28 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span class="right-list-title">常用工具</span>
+        <span class="right-list-title">友情链接</span>
       </div>
-      <div class="right-tools">
-        <span>工具名称：</span>
-        <a href="http://www.baidu.com">http://www.baidu.com</a>
+      <div class="right-tools" v-for="item in links" :key="item.id">
+        <span>{{item.name}}</span>
+        <span>:</span>
+        <a :href="item.url" :target="item.target">{{item.url}}</a>
+        <el-divider></el-divider>
       </div>
-      <el-divider></el-divider>
-            <div class="right-tools">
-        <span>工具名称：</span>
-        <a href="http://www.baidu.com">http://www.baidu.com</a>
-      </div>
-      <el-divider></el-divider>
-            <div class="right-tools">
-        <span>工具名称：</span>
-        <a href="http://www.baidu.com">http://www.baidu.com</a>
-      </div>
-      <el-divider></el-divider>
     </el-card>
   </el-col>
 </template>
 
 <script>
 export default {
-  name: "right"
+  name: "right",
+  props:{
+    siteInfo:Object,
+    links:Array
+  },
+  mounted(){
+    console.log(this.links)
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -103,6 +101,7 @@ export default {
       padding: 1rem 4rem;
       font-size: 0.87rem;
       color: #636e72;
+      line-height: 1.2rem;
     }
   }
   .accounts {
