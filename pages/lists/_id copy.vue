@@ -27,49 +27,36 @@
     <div class="pagination">
       <el-pagination
         @current-change="handleCurrentChange"
+        @prev-click="handleCurrentPrev"
+        @next-click="handleCurrentNext"
         background
         :hide-on-single-page="true"
         layout="prev, pager, next"
         next-text="下一页"
         prev-text="上一页"
         :page-count="page_count"
-        :current-page="page"
       ></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 
 export default {
   name: "",
-  async asyncData({ $axios, params, route }) {
-    let page = route.query.page ? Number.parseInt(route.query.page) : 1;
-    const categories = await $axios.$get("/api/portal/categories/" + params.id);
-    const listInfo = await $axios.$get(
-      "/api/portal/lists/getCategoryPostLists",
-      {
-        params: {
-          category_id: params.id,
-          page: page,
-          page_size: 2
-        }
-      }
-    );
-    return {
-      categories: categories.data,
-      lists: listInfo.data.list,
-      page_count: listInfo.data.page_count,
-      page:listInfo.data.page
-    };
-  },
   data() {
     return {
-      lists: [],
-      page_count: 0,
-      page: 1,
-      page_size: 2
+      lists:[],
+      page_count:0,
+      page:1,
+      page_size:2
+    };
+  },
+  async asyncData({ $axios, params }) {
+    const categories = await $axios.$get("/api/portal/categories/" + params.id);
+    return {
+      categories: categories.data
     };
   },
   //独立设置head信息
@@ -85,17 +72,40 @@ export default {
       ]
     };
   },
+  created(){
+    this.getListInfo()
+  },
   methods: {
     goBack() {
       this.$router.go(-1); //返回上一层
     },
-    handleCurrentChange(page) {
-      this.page = page;
-      this.$route.query.page = page;
-      window.location =
-        "/lists/" + this.$route.params.id + "?page=" + this.$route.query.page;
-      // window.location ='/lists/2?page='+this.$route.query.page
-      // this.$router.push({path:'/lists/2?',query:{page:this.$route.query.page}});
+    getListInfo(){
+      var that = this;
+     axios.get('http://www.isdaji.com/api/portal/lists/getCategoryPostLists', {
+        params: {
+          category_id: this.$route.params.id,
+          page: that.page,
+          page_size: that.page_size
+        }
+      }).then((res)=>{
+       res = res.data
+      if(res.code ==1 && res.data){
+        this.lists = res.data.list
+        this.page_count = res.data.page_count
+      }
+     })
+    },
+    handleCurrentChange(val) {
+       this.page = val;
+       this.getListInfo();
+    },
+    handleCurrentPrev(val) {
+       this.page = val;
+       this.getListInfo();
+    },
+    handleCurrentNext(val) {
+       this.page = val;
+       this.getListInfo();
     }
   }
 };
