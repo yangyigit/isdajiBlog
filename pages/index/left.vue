@@ -15,7 +15,7 @@
           <el-row :gutter="10">
             <el-col :md="6" :lg="6" :xl="6">
               <div class="block">
-                <el-image :src="item.more.thumbnail" class="content-img">
+                <el-image :src="item.more.thumbnail" class="content-img" lazy @click="viweImg">
                   <div slot="placeholder" class="image-slot">
                     加载中
                     <span class="dot">...</span>
@@ -51,7 +51,7 @@
           <el-row :gutter="10">
             <el-col :md="6" :lg="6" :xl="6">
               <div class="block">
-                <el-image :src="content.more.thumbnail" class="content-img">
+                <el-image :src="content.more.thumbnail" class="content-img" lazy  @click="viweImg">
                   <div slot="placeholder" class="image-slot">
                     加载中
                     <span class="dot">...</span>
@@ -87,6 +87,11 @@ export default {
       time = time * 1000
       let date = new Date(time)
       return formatDate(date, 'yyyy-MM-dd')
+    }
+  },
+  methods:{
+    viweImg(){
+      document.body.style = "";
     }
   }
 };
