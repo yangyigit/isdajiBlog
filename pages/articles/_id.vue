@@ -10,11 +10,13 @@
       <el-divider></el-divider>
       <div class="artchive-content" v-html="info.post_content"></div>
     </el-card>
+    <comment :comments="commentData"></comment>
   </div>
 </template>
 
 <script>
 import Breadcrumb from '@/components/Breadcrumb'
+import Comment from '@/components/Comment'
 import {formatDate} from '@/static/js/formatDate.js'
 
 export default {
@@ -39,14 +41,15 @@ export default {
         ]
       }
   },
-  components: { Breadcrumb },
-  asyncData(context) {
-        return context.$axios.get('/api/portal/articles/'+context.params.id)
-      .then(res => {
-        if(res.data.code == 1){
-          return { info: res.data.data }
-        }
-      })
+  components: { Breadcrumb,Comment },
+  
+  async asyncData({ $axios, params }) {
+      const articles =  await $axios.$get("/api/portal/articles/" + params.id);
+      const comment =  await $axios.$get("https://www.fastmock.site/mock/747b1149b5dda72a17567e5661de25db/api/comment");
+      return {
+      info: articles.data,
+      commentData: comment.data,
+    };
   },
   filters:{
 
