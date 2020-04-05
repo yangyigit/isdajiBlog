@@ -1,305 +1,148 @@
-<!--评论模块-->
 <template>
-  <div class="container">
-    <div class="comment" v-for="item in comments" :key="item.id">
-      <div class="info">
-        <img class="avatar" :src="item.fromAvatar" width="36" height="36" />
-        <div class="right">
-          <div class="name">{{item.fromName}}</div>
-          <div class="date">{{item.date}}</div>
-        </div>
+  <div class>
+    <el-card class="box-card comments-wrap">
+      <div slot="header" class="clearfix">
+        <span>评论区</span>
       </div>
-      <div class="content">{{item.content}}</div>
-      <div class="control">
-        <span class="like" :class="{active: item.isLike}" @click="likeClick(item)">
-          <i class="iconfont icon-like"></i>
-          <span class="like-num">{{item.likeNum > 0 ? item.likeNum + '人赞' : '赞'}}</span>
-        </span>
-        <span class="comment-reply" @click="showCommentInput(item)">
-          <i class="iconfont icon-comment"></i>
-          <span>回复</span>
-        </span>
-      </div>
-      <div class="reply">
-        <div class="item" v-for="reply in item.reply" :key="reply.id">
-          <div class="reply-content">
-            <span class="from-name">{{reply.fromName}}</span>
-            <span>:</span>
-            <span class="to-name">@{{reply.toName}}</span>
-            <span>{{reply.content}}</span>
+      <el-form
+        :model="ruleForm"
+        :rules="rules"
+        ref="ruleForm"
+        label-width="100px"
+        class="demo-ruleForm"
+      >
+        <div class="inline-style">
+          <div>
+            <el-form-item label="昵称" prop="full_name">
+              <el-input v-model="ruleForm.full_name"></el-input>
+            </el-form-item>
           </div>
-          <div class="reply-bottom">
-            <span>{{reply.date}}</span>
-            <span class="reply-text" @click="showCommentInput(item, reply)">
-              <i class="iconfont icon-comment"></i>
-              <span>回复</span>
-            </span>
+          <div>
+            <el-form-item label="邮箱" prop="email">
+              <el-input v-model="ruleForm.email" placeholder="我们将不会公开您的邮箱"></el-input>
+            </el-form-item>
           </div>
         </div>
-        <div class="write-reply" v-if="item.reply.length > 0" @click="showCommentInput(item)">
-          <i class="el-icon-edit"></i>
-          <span class="add-comment">添加新评论</span>
+        <div>
+          <el-form-item label="留言" prop="content">
+            <el-input type="textarea" v-model="ruleForm.content"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+          </el-form-item>
         </div>
-        <transition name="fade">
-          <div class="input-wrapper" v-if="showItemId === item.id">
-            <el-input
-              class="gray-bg-input"
-              v-model="inputComment"
-              type="textarea"
-              :rows="3"
-              autofocus
-              placeholder="写下你的评论"
-            ></el-input>
-            <div class="btn-control">
-              <span class="cancel" @click="cancel">取消</span>
-              <el-button class="btn" type="success" round @click="commitComment">确定</el-button>
-            </div>
+      </el-form>
+      <el-divider>评论内容</el-divider>
+      <div v-for="item in comments" :key="item.id">
+        <div class="demo-type">
+          <div class="avatar">
+            <el-avatar icon="el-icon-user-solid"></el-avatar>
           </div>
-        </transition>
-      </div>
-    </div>
-    <div class="comment">
-    <div class="reply">
-      <div class="input-wrapper">
-        <el-input
-          class="gray-bg-input"
-          v-model="inputComment"
-          type="textarea"
-          :rows="3"
-          autofocus
-          placeholder="写下你的评论"
-        ></el-input>
-        <div class="btn-control">
-          <span class="cancel" @click="cancel">取消</span>
-          <el-button class="btn" type="success" round @click="commitComment">确定</el-button>
+          <div class="nickname">
+            <div>{{item.full_name}}</div>
+            <div class="nickname-date">{{item.create_time | formatDate}}</div>
+          </div>
         </div>
+        <div class="comment-content">{{item.content}}</div>
+        <div class="comment-reply" v-for="child in item.children" :key="child.id">
+          <span>{{child.full_name}}:</span>
+          {{child.content}}
+        </div>
+        <el-divider></el-divider>
       </div>
-    </div>
-  </div>
+    </el-card>
+
+    <!-- <div v-for="item in comments" :key="item.id">
+        <p>{{item.content}}</p>
+        <div  v-if="item.children">
+            <comment :comments="item.children"></comment>
+        </div>
+        <hr v-if="!item.children">
+    </div>-->
   </div>
 </template>
 
 <script>
+import { formatDate } from "@/static/js/formatDate.js";
+
 export default {
+  name: "Comment",
   props: {
     comments: {
       type: Array,
       required: true
     }
   },
-  components: {},
   data() {
     return {
-      inputComment: "",
-      showItemId: ""
+      ruleForm: {
+        full_name: "",
+        email: "",
+        content: ""
+      },
+      rules: {
+        content: [
+          { required: true, message: "请填写留言内容", trigger: "blur" }
+        ],
+        full_name: [{ required: true, message: "请填写昵称", trigger: "blur" }],
+        email: [
+          { type: "email", message: "请填写正确的邮箱格式", trigger: "blur" },
+          { required: true, message: "请填写邮箱", trigger: "blur" }
+        ]
+      }
     };
   },
-  computed: {},
   methods: {
-    /**
-     * 点赞
-     */
-    likeClick(item) {
-      if (item.isLike === null) {
-        this.$set(item, "isLike", true);
-        item.likeNum++;
-      } else {
-        if (item.isLike) {
-          item.likeNum--;
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          console.log(this.ruleForm);
         } else {
-          item.likeNum++;
+          console.log("error submit!!");
+          return false;
         }
-        item.isLike = !item.isLike;
-      }
+      });
     },
-
-    /**
-     * 点击取消按钮
-     */
-    cancel() {
-      this.showItemId = "";
-    },
-
-    /**
-     * 提交评论
-     */
-    commitComment() {
-      console.log(this.inputComment);
-    },
-
-    /**
-     * 点击评论按钮显示输入框
-     * item: 当前大评论
-     * reply: 当前回复的评论
-     */
-    showCommentInput(item, reply) {
-      if (reply) {
-        this.inputComment = "@" + reply.fromName + " ";
-      } else {
-        this.inputComment = "";
-      }
-      this.showItemId = item.id;
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     }
   },
-  created() {
-    //   console.log(this.comments)
+  filters: {
+    formatDate(time) {
+      time = time * 1000;
+      let date = new Date(time);
+      return formatDate(date, "yyyy-MM-dd hh:mm:ss");
+    }
   }
 };
 </script>
-
-<style scoped lang="less">
-.container {
-  padding: 0 10px;
-  box-sizing: border-box;
-  .comment {
+<style lang="less" scoped>
+.comments-wrap {
+  margin: 2rem 0;
+  .inline-style {
     display: flex;
-    flex-direction: column;
-    padding: 10px;
-    border-bottom: 1px solid #f2f6fc;
-    .info {
-      display: flex;
-      align-items: center;
-      .avatar {
-        border-radius: 50%;
-      }
-      .right {
-        display: flex;
-        flex-direction: column;
-        margin-left: 10px;
-        .name {
-          font-size: 16px;
-          color: #303133;
-          margin-bottom: 5px;
-          font-weight: 500;
-        }
-        .date {
-          font-size: 12px;
-          color: #909399;
-        }
+  }
+  .demo-type {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem;
+    .nickname {
+      padding: 0 .5rem;
+      .nickname-date {
+        font-size: 0.8rem;
+        color: #95a5a6;
       }
     }
-    .content {
-      font-size: 16px;
-      color: #303133;
-      line-height: 20px;
-      padding: 10px 0;
-    }
-    .control {
-      display: flex;
-      align-items: center;
-      font-size: 14px;
-      color: #909399;
-      .like {
-        display: flex;
-        align-items: center;
-        margin-right: 20px;
-        cursor: pointer;
-        &.active,
-        &:hover {
-          color: #409eff;
-        }
-        .iconfont {
-          font-size: 14px;
-          margin-right: 5px;
-        }
-      }
-      .comment-reply {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        &:hover {
-          color: #333;
-        }
-        .iconfont {
-          font-size: 16px;
-          margin-right: 5px;
-        }
-      }
-    }
-    .reply {
-      margin: 10px 0;
-      border-left: 2px solid #dcdfe6;
-      .item {
-        margin: 0 10px;
-        padding: 10px 0;
-        border-bottom: 1px dashed #ebeef5;
-        .reply-content {
-          display: flex;
-          align-items: center;
-          font-size: 14px;
-          color: #303133;
-          .from-name {
-            color: #409eff;
-          }
-          .to-name {
-            color: #409eff;
-            margin-left: 5px;
-            margin-right: 5px;
-          }
-        }
-        .reply-bottom {
-          display: flex;
-          align-items: center;
-          margin-top: 6px;
-          font-size: 12px;
-          color: #909399;
-          .reply-text {
-            display: flex;
-            align-items: center;
-            margin-left: 10px;
-            cursor: pointer;
-            &:hover {
-              color: #333;
-            }
-            .icon-comment {
-              margin-right: 5px;
-            }
-          }
-        }
-      }
-      .write-reply {
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        color: #909399;
-        padding: 10px;
-        cursor: pointer;
-        &:hover {
-          color: #303133;
-        }
-        .el-icon-edit {
-          margin-right: 5px;
-        }
-      }
-      .fade-enter-active,
-      fade-leave-active {
-        transition: opacity 0.5s;
-      }
-      .fade-enter,
-      .fade-leave-to {
-        opacity: 0;
-      }
-      .input-wrapper {
-        padding: 10px;
-        .btn-control {
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
-          padding-top: 10px;
-          .cancel {
-            font-size: 16px;
-            color: #606266;
-            margin-right: 20px;
-            cursor: pointer;
-            &:hover {
-              color: #333;
-            }
-          }
-          .confirm {
-            font-size: 16px;
-          }
-        }
-      }
+  }
+  .comment-content {
+    padding: 0rem 1rem;
+  }
+  .comment-reply {
+    padding: 1rem 1rem;
+    span {
+      font-size: 0.8rem;
+      color: #3498db;
     }
   }
 }

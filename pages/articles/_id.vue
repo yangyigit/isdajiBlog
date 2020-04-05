@@ -45,10 +45,15 @@ export default {
   
   async asyncData({ $axios, params }) {
       const articles =  await $axios.$get("/api/portal/articles/" + params.id);
-      const comment =  await $axios.$get("https://www.fastmock.site/mock/747b1149b5dda72a17567e5661de25db/api/comment");
+      const comment =  await $axios.$get("/api/portal/comment/getList",
+      {
+        params: {
+          object_id: params.id,
+        }
+      });
       return {
       info: articles.data,
-      commentData: comment.data,
+      commentData: comment.data.list,
     };
   },
   filters:{
