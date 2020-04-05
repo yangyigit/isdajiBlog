@@ -65,6 +65,7 @@
 
 <script>
 import { formatDate } from "@/static/js/formatDate.js";
+import axios from "axios";
 
 export default {
   name: "Comment",
@@ -72,7 +73,8 @@ export default {
     comments: {
       type: Array,
       required: true
-    }
+    },
+    title: String
   },
   data() {
     return {
@@ -97,7 +99,24 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.ruleForm);
+          axios
+            .post("http://www.isdaji.com/api/portal/comment/addComment", {
+              object_id: this.$route.params.id,
+              full_name: this.ruleForm.full_name,
+              email: this.ruleForm.email,
+              content: this.ruleForm.content,
+              more: this.title,
+            })
+            .then(res => {
+              if (res.data.code == 1) {
+                
+              }
+            });
+          // console.log(this.ruleForm.full_name);
+          // console.log(this.ruleForm.email);
+          // console.log(this.ruleForm.content);
+          // console.log(this.title);
+          // console.log(this.$route.params.id);
         } else {
           console.log("error submit!!");
           return false;
@@ -128,7 +147,7 @@ export default {
     align-items: center;
     padding: 0.8rem;
     .nickname {
-      padding: 0 .5rem;
+      padding: 0 0.5rem;
       .nickname-date {
         font-size: 0.8rem;
         color: #95a5a6;

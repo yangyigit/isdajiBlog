@@ -10,7 +10,7 @@
       <el-divider></el-divider>
       <div class="artchive-content" v-html="info.post_content"></div>
     </el-card>
-    <comment :comments="commentData"></comment>
+    <comment :comments="commentData" :title="this.info.post_title"></comment>
   </div>
 </template>
 
