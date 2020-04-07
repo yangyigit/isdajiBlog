@@ -105,11 +105,19 @@ export default {
               full_name: this.ruleForm.full_name,
               email: this.ruleForm.email,
               content: this.ruleForm.content,
-              more: this.title,
+              more: this.title
             })
             .then(res => {
               if (res.data.code == 1) {
-                
+                this.$message({
+                  message: '评论成功,审核通过后将会显示',
+                  type: "success"
+                });
+                setTimeout(()=>{
+                  this.$router.go(0);
+                },3000)
+              } else {
+                this.$message.error('评论失败');
               }
             });
           // console.log(this.ruleForm.full_name);
@@ -159,10 +167,7 @@ export default {
   }
   .comment-reply {
     padding: 1rem 1rem;
-    span {
-      font-size: 0.8rem;
-      color: #3498db;
-    }
+    color: #3498db;
   }
 }
 </style>
