@@ -24,11 +24,40 @@
 - 【文章分页】
 - 【评论管理】
 
-## 项目截图
+## 准备工作
+由于后台请求地址不同，请根据自己的情况修改
+1、nuxt.config.js
+```
+  proxy: {
+    '/api/': {
+      target:'url', //更换服务器地址
+      pathRewrite: {
+        '^/api/': '/'
+      }
+    }
+}
+```
+2、pages\lists\_id copy.vue
+```
+    getListInfo(){
+      var that = this;
+      //更换服务器地址
+     axios.get('http://www.isdaji.com/api/portal/lists/getCategoryPostLists', {
+        params: {
+          category_id: this.$route.params.id,
+          page: that.page,
+          page_size: that.page_size
+        }
+      }).then((res)=>{
+       res = res.data
+      if(res.code ==1 && res.data){
+        this.lists = res.data.list
+        this.page_count = res.data.page_count
+      }
+     })
+    }
+```
 
-
-
-## 
 
 ## 安装&发布
 
