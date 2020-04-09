@@ -44,8 +44,8 @@ export default {
   components: { Breadcrumb,Comment },
   
   async asyncData({ $axios, params }) {
-      const articles =  await $axios.$get("/api.php/portal/articles/" + params.id);
-      const comment =  await $axios.$get("/api.php/portal/comment/getList",
+      const articles =  await $axios.$get("/api/portal/articles/" + params.id);
+      const comment =  await $axios.$get("/api/portal/comment/getList",
       {
         params: {
           object_id: params.id,

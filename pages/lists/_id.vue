@@ -46,9 +46,9 @@ export default {
   name: "",
   async asyncData({ $axios, params, route }) {
     let page = route.query.page ? Number.parseInt(route.query.page) : 1;
-    const categories = await $axios.$get("/api.php/portal/categories/" + params.id);
+    const categories = await $axios.$get("/api/portal/categories/" + params.id);
     const listInfo = await $axios.$get(
-      "/api.php/portal/lists/getCategoryPostLists",
+      "/api/portal/lists/getCategoryPostLists",
       {
         params: {
           category_id: params.id,

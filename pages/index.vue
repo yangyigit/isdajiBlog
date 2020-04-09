@@ -17,10 +17,10 @@ export default {
   name: "index",
   components: { left, right },
   async asyncData({ $axios }) {
-    const respage = await $axios.$get('/api.php/portal/pages')
-    const resart = await $axios.$get('/api.php/portal/recommend')
-    const links= await $axios.$get('/api.php/portal/site/getLinks')
-    const siteInfo = await $axios.$get('/api.php/portal/site',{
+    const respage = await $axios.$get('/api/portal/pages')
+    const resart = await $axios.$get('/api/portal/recommend')
+    const links= await $axios.$get('/api/portal/site/getLinks')
+    const siteInfo = await $axios.$get('/api/portal/site',{
         params: {
           type: 'site_info'
         }
