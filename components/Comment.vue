@@ -120,11 +120,6 @@ export default {
                 this.$message.error('评论失败');
               }
             });
-          // console.log(this.ruleForm.full_name);
-          // console.log(this.ruleForm.email);
-          // console.log(this.ruleForm.content);
-          // console.log(this.title);
-          // console.log(this.$route.params.id);
         } else {
           console.log("error submit!!");
           return false;

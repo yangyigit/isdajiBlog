@@ -22,7 +22,8 @@
 - 【首页列表展示】
 - 【文章详情页】
 - 【文章分页】
-- 【评论管理】
+- 【评论组件】
+- 【面包屑导航组件】
 
 ## 准备工作
 由于后台请求地址不同，请根据自己的情况修改
@@ -37,25 +38,39 @@
     }
 }
 ```
-2、pages\lists\_id copy.vue
+2、components\Comment.vue
 ```
-    getListInfo(){
-      var that = this;
-      //更换服务器地址
-     axios.get('http://www.isdaji.com/api/portal/lists/getCategoryPostLists', {
-        params: {
-          category_id: this.$route.params.id,
-          page: that.page,
-          page_size: that.page_size
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          axios
+          //更换服务器地址
+            .post("http://www.isdaji.com/api/portal/comment/addComment", {
+              object_id: this.$route.params.id,
+              full_name: this.ruleForm.full_name,
+              email: this.ruleForm.email,
+              content: this.ruleForm.content,
+              more: this.title
+            })
+            .then(res => {
+              if (res.data.code == 1) {
+                this.$message({
+                  message: '评论成功,审核通过后将会显示',
+                  type: "success"
+                });
+                setTimeout(()=>{
+                  this.$router.go(0);
+                },3000)
+              } else {
+                this.$message.error('评论失败');
+              }
+            });
+        } else {
+          console.log("error submit!!");
+          return false;
         }
-      }).then((res)=>{
-       res = res.data
-      if(res.code ==1 && res.data){
-        this.lists = res.data.list
-        this.page_count = res.data.page_count
-      }
-     })
-    }
+      });
+    },
 ```
 
 
