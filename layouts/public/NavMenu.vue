@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     getNavInfo(){
-     axios.get('http://www.isdaji.com/api/portal/categories').then((res)=>{
+     axios.get('http://admin.isdaji.cn/api.php/portal/categories').then((res)=>{
        res = res.data
       if(res.code ==1 && res.data){
         this.nav = res.data

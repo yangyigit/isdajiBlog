@@ -100,7 +100,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           axios
-            .post("http://www.isdaji.com/api/portal/comment/addComment", {
+            .post("http://admin.isdaji.cn/api.php/portal/comment/addComment", {
               object_id: this.$route.params.id,
               full_name: this.ruleForm.full_name,
               email: this.ruleForm.email,

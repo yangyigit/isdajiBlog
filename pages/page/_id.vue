@@ -42,7 +42,7 @@ export default {
   components: { Breadcrumb },
   asyncData(context) {
     return context.$axios
-      .get("/api/portal/pages/" + context.params.id)
+      .get("/api.php/portal/pages/" + context.params.id)
       .then(res => {
         if (res.data.code == 1) {
           return { info: res.data.data };
