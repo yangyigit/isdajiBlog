@@ -32,7 +32,7 @@
 ```
   proxy: {
     '/api/': {
-      target:'url', //更换服务器地址
+      target:'url', //更换为自己服务器地址
       pathRewrite: {
         '^/api/': '/'
       }
@@ -45,8 +45,8 @@
       this.$refs[formName].validate(valid => {
         if (valid) {
           axios
-          //更换服务器地址
-            .post("http://www.isdaji.com/api/portal/comment/addComment", {
+          //更换为自己服务器地址
+            .post("http://admin.isdaji.cn/api/portal/comment/addComment", {
               object_id: this.$route.params.id,
               full_name: this.ruleForm.full_name,
               email: this.ruleForm.email,
@@ -72,6 +72,11 @@
         }
       });
     },
+```
+
+3、其他关于axios请求地址修改（就不一一列举了）
+```
+在pages目录下搜索 axios 修改即可
 ```
 
 
