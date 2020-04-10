@@ -3,7 +3,7 @@
 一个基于vue+nuxtJS+elementUI的个人博客项目
 
 ## 项目地址
-前台地址：<https://www.mdeditor.com>
+前台地址：<http://www.isdaji.cn>
 
 ## 项目介绍
 一个不务正业的php程序员学习vue后写的实战练手项目，也算是迈出了转向全栈工程师的第一步了。
