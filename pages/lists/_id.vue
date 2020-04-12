@@ -106,6 +106,7 @@ export default {
   margin-top: 0.5rem;
   max-width: 1300px;
   margin: 1rem auto;
+  padding: 0 1rem;
   .el-card {
     margin: 1rem 0;
   }
