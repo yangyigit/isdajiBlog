@@ -46,7 +46,7 @@
         if (valid) {
           axios
           //更换为自己服务器地址
-            .post("http://admin.isdaji.cn/api/portal/comment/addComment", {
+            .post("/api/portal/comment/addComment", {
               object_id: this.$route.params.id,
               full_name: this.ruleForm.full_name,
               email: this.ruleForm.email,

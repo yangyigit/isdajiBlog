@@ -60,7 +60,7 @@ module.exports = {
   },
   proxy: {
     '/api/': {
-      target:'http://admin.isdaji.cn/',
+      target:'http://xxx.xxxx.xx/',
       pathRewrite: {
         '^/api/': '/'
       }
